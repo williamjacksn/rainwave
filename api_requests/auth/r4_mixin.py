@@ -1,11 +1,12 @@
 import uuid
 from libs import db
 from rainwave.user import User
+from api.web import RainwaveHandler
 
 ALLOWED_DESTINATIONS = ("web", "rw", "app", "rwpath")
 
 
-class R4SetupSessionMixin:
+class R4SetupSessionMixin(RainwaveHandler):
     def get_destination(self):
         destination = self.get_argument("destination", "web")
         if destination not in ALLOWED_DESTINATIONS:

@@ -89,7 +89,7 @@
 		};
 
 		var show = function(json, no_ad, no_img_check) {
-			var art_url = json.songs[0].albums[0].art ? json.songs[0].albums[0].art + (json.ad ? "" : "_320.jpg") : null;
+			var art_url = json.songs[0].album.art ? json.songs[0].album.art + (json.ad ? "" : "_320.jpg") : null;
 			if (!art_url && options.sid == 2) {
 				art_url = "/static/images4/noart_2.jpg";
 			}
@@ -149,7 +149,7 @@
 			}
 			html += ">";
 			html += "<div class='title'>" + json.songs[0].title + "</div>";
-			html += "<div class='album'>" + json.songs[0].albums[0].name + "</div>";
+			html += "<div class='album'>" + json.songs[0].album.name + "</div>";
 			if ((options.show_artist == "true") && json.songs[0].artist_parseable) {
 				html += "<div class='artist'>";
 				var artists = JSON.parse(json.songs[0].artist_parseable);

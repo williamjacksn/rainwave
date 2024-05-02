@@ -1,7 +1,7 @@
 from api import fieldtypes
 from api.exceptions import APIException
 from api.urls import handle_api_html_url, handle_api_url
-from api.web import APIHandler, PrettyPrintAPIMixin
+from api.web import APIHandler, PrettyPrintAPIHandler
 from libs import cache, db
 
 
@@ -52,7 +52,7 @@ class OrderRequests(APIHandler):
 
     def post(self):
         order = 0
-        for song_id in self.get_argument("order"):
+        for song_id in self.get_argument_required("order"):
             db.c.update(
                 "UPDATE r4_request_store SET reqstor_order = %s WHERE user_id = %s AND song_id = %s",
                 (order, self.user.id, song_id),
@@ -167,5 +167,5 @@ class ListRequestLine(APIHandler):
 
 
 @handle_api_html_url("request_line")
-class ListRequestLineHTML(PrettyPrintAPIMixin, ListRequestLine):
+class ListRequestLineHTML(PrettyPrintAPIHandler, ListRequestLine):
     pass

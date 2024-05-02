@@ -24,7 +24,7 @@ var ArtistView = function (json) {
       sid = final_order[i];
       albums_sid = [];
       for (album_id in json.all_songs[sid]) {
-        a = json.all_songs[sid][album_id][0].albums[0];
+        a = json.all_songs[sid][album_id][0].album;
         a.sid = sid;
         if (sid !== User.sid) {
           a.name = $l("album_on_station", {

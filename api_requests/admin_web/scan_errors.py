@@ -21,10 +21,13 @@ def relative_time(epoch_time):
 
 
 @handle_url("/admin/album_list/scan_results")
-class ScanResults(api.web.PrettyPrintAPIMixin, BackendScanErrors):
+class ScanResults(api.web.PrettyPrintAPIHandler, BackendScanErrors):
     dj_preparation = True
 
     def get(self):  # pylint: disable=E0202
+        if not isinstance(self._output, dict):
+            raise api.web.APIException("internal_error", http_code=500)
+
         new_results = []
         for row in self._output[self.return_name]:
             if row.get("traceback"):

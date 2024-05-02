@@ -16,5 +16,5 @@ class ListRequestLine(api.web.APIHandler):
 
 
 @handle_api_html_url("request_line")
-class ListRequestLineHTML(api.web.PrettyPrintAPIMixin, ListRequestLine):
+class ListRequestLineHTML(api.web.PrettyPrintAPIHandler, ListRequestLine):
     pass

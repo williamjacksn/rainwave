@@ -47,7 +47,7 @@ class User:
     def __init__(self, user_id):
         self.id = user_id
         self.authorized = False
-        self.ip_address = False
+        self.ip_address = None
 
         self.api_key = False
 
@@ -148,7 +148,7 @@ class User:
     def _auth_anon_user(self, api_key, bypass=False):
         if not bypass:
             cache_key = unicodedata.normalize(
-                "NFKD", u"api_key_listen_key_%s" % api_key
+                "NFKD", "api_key_listen_key_%s" % api_key
             ).encode("ascii", "ignore")
             listen_key = cache.get(cache_key)
             if not listen_key:
@@ -227,9 +227,9 @@ class User:
 
     def to_private_dict(self):
         """
-		Returns a JSONable dict containing data that the user will want to see or make use of.
-		NOT for other users to see.
-		"""
+        Returns a JSONable dict containing data that the user will want to see or make use of.
+        NOT for other users to see.
+        """
         return self.data
 
     def is_tunedin(self):
@@ -352,7 +352,10 @@ class User:
     def clear_all_requests_on_cooldown(self):
         return db.c.update(
             "DELETE FROM r4_request_store USING r4_song_sid WHERE r4_song_sid.song_id = r4_request_store.song_id AND r4_song_sid.sid = r4_request_store.sid AND user_id = %s AND song_cool_end > %s",
-            (self.id, timestamp() + (20 * 60),),
+            (
+                self.id,
+                timestamp() + (20 * 60),
+            ),
         )
 
     def pause_requests(self):
@@ -553,7 +556,7 @@ class User:
                 int(timestamp()) + 172800, self.data.get("api_key")
             )
             cache_key = unicodedata.normalize(
-                "NFKD", u"api_key_listen_key_%s" % api_key
+                "NFKD", "api_key_listen_key_%s" % api_key
             ).encode("ascii", "ignore")
             cache.set_global(cache_key, self.data["listen_key"])
         elif self.id > 1:

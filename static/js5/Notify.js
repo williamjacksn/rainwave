@@ -9,7 +9,7 @@ var R4Notify = (function () {
 
   var standardNotifier = function (song, artists, art) {
     return new Notification(song.title, {
-      body: song.albums[0].name + "\n" + artists,
+      body: song.album.name + "\n" + artists,
       tag: "current_song",
       icon: art,
     });
@@ -17,7 +17,7 @@ var R4Notify = (function () {
 
   var windowsFirefoxNotifier = function (song, artists, art) {
     return new Notification($l("now_playing"), {
-      body: song.title + "\n" + song.albums[0].name + "\n" + artists,
+      body: song.title + "\n" + song.album.name + "\n" + artists,
       tag: "current_song",
       icon: art,
     });
@@ -25,7 +25,7 @@ var R4Notify = (function () {
 
   var linuxNotifier = function (song, artists) {
     return new Notification(song.title, {
-      body: song.albums[0].name + "\n" + artists,
+      body: song.album.name + "\n" + artists,
       tag: "current_song",
     });
   };
@@ -59,8 +59,8 @@ var R4Notify = (function () {
     if (!document.body.classList.contains("tuned_in")) return;
     current_song_id = sched_current.songs[0].id;
 
-    var art = sched_current.songs[0].albums[0].art
-      ? sched_current.songs[0].albums[0].art + "_120.jpg"
+    var art = sched_current.songs[0].album.art
+      ? sched_current.songs[0].album.art + "_120.jpg"
       : "/static/images4/noart_1.jpg";
     var artists = "";
     for (var i = 0; i < sched_current.songs[0].artists.length; i++) {

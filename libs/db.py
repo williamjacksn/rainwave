@@ -5,8 +5,8 @@ import time
 from libs import config
 from libs import log
 
-c = None
-connection = None
+c: PostgresCursor = None  # type: ignore
+connection: psycopg2.extensions.connection = None  # type: ignore
 connection_errors = (psycopg2.OperationalError, psycopg2.InterfaceError)
 
 
@@ -46,6 +46,8 @@ class PostgresCursor(psycopg2.extras.RealDictCursor):
         if self.rowcount <= 0 or not self.rowcount:
             return None
         r = self.fetchone()
+        if not r:
+            return None
         return r[next(iter(r.keys()))]
 
     def fetch_row(self, query, params=None):
@@ -66,6 +68,8 @@ class PostgresCursor(psycopg2.extras.RealDictCursor):
             return []
         arr = []
         row = self.fetchone()
+        if not row:
+            return None
         col = next(iter(row.keys()))
         arr.append(row[col])
         for row in self.fetchall():
@@ -131,7 +135,7 @@ def connect(auto_retry=True, retry_only_this_time=False):
     global connection
     global c
 
-    if connection and c and not c.disconnected:
+    if connection and c and not c.closed:
         return True
 
     name = config.get("db_name")
@@ -186,7 +190,7 @@ def close():
     if connection:
         connection.close()
     c = None
-    connection = None
+    connection = None  # type: ignore
 
     return True
 

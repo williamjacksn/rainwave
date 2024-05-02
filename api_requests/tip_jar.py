@@ -1,5 +1,5 @@
 from api.web import APIHandler
-from api.web import PrettyPrintAPIMixin
+from api.web import PrettyPrintAPIHandler
 from api.urls import handle_api_url
 from api.urls import handle_api_html_url
 
@@ -29,7 +29,7 @@ class TipJarContents(APIHandler):
 
 
 @handle_api_html_url("tip_jar")
-class TipJarHTML(PrettyPrintAPIMixin, TipJarContents):
+class TipJarHTML(PrettyPrintAPIHandler, TipJarContents):
     login_required = False
     auth_required = False
 

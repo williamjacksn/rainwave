@@ -9,6 +9,7 @@ from libs import db
 from libs import cache
 
 import api.web
+from api.web import APIException
 from api.urls import handle_url
 from api import fieldtypes
 
@@ -285,12 +286,15 @@ class AlbumList(api.web.HTMLRequest):
         pass
 
 
-class SongList(api.web.PrettyPrintAPIMixin, api_requests.playlist.AlbumHandler):
+class SongList(api.web.PrettyPrintAPIHandler, api_requests.playlist.AlbumHandler):
     admin_required = True
     allow_sid_zero = True
     # fields are handled by AlbumHandler
 
     def get(self):  # pylint: disable=method-hidden
+        if not isinstance(self._output, dict):
+            raise APIException("internal_error", http_code=500)
+
         self.write(self.render_string("bare_header.html", title="Song List"))
         self.write(
             "<h2>%s (%s)</h2>"

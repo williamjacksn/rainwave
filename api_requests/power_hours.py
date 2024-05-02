@@ -3,7 +3,8 @@ import api
 
 from api.urls import handle_api_url
 from api.urls import handle_api_html_url
-from api.web import PrettyPrintAPIMixin
+import api.web
+from api.web import PrettyPrintAPIHandler
 from libs import db
 from libs import config
 
@@ -39,7 +40,7 @@ SHOW_TIMEZONES = [
 
 
 @handle_api_html_url("power_hours")
-class AllRequestedSongsHTML(PrettyPrintAPIMixin, ListPowerHours):
+class AllRequestedSongsHTML(PrettyPrintAPIHandler, ListPowerHours):
     def header_special(self):
         self.write("<th>Station</th>")
         self.write("<th>Date and Time</th>")

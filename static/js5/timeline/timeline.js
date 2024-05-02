@@ -162,7 +162,7 @@ var Timeline = (function () {
 
     // The now playing bar
     Clock.set_page_title(
-      sched_current.songs[0].albums[0].name +
+      sched_current.songs[0].album.name +
         " - " +
         sched_current.songs[0].title,
       sched_current.end

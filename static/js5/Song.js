@@ -16,7 +16,7 @@ var Song = function (self, parent_event) {
   self.autovoted = false;
 
   AlbumArt(
-    self.art || (self.albums.length ? self.albums[0].art : null),
+    self.art || (self.albums.length ? self.album.art : null),
     template.art,
     self.request_id
   );
@@ -25,25 +25,25 @@ var Song = function (self, parent_event) {
   if (template.rating) {
     Rating.register(self);
   }
-  if (self.albums[0].$t.rating) {
-    Rating.register(self.albums[0]);
+  if (self.album.$t.rating) {
+    Rating.register(self.album);
   }
   if ("good" in self && !self.good) {
     if (template.fave) {
       self.$t.fave.parentNode.removeChild(self.$t.fave);
     }
-    if (self.albums[0].$t.fave) {
-      self.albums[0].$t.fave.parentNode.removeChild(self.albums[0].$t.fave);
+    if (self.album.$t.fave) {
+      self.album.$t.fave.parentNode.removeChild(self.album.$t.fave);
     }
-    if (self.albums[0].$t.rating) {
-      self.albums[0].$t.rating.setAttribute("name", "");
+    if (self.album.$t.rating) {
+      self.album.$t.rating.setAttribute("name", "");
     }
   } else {
     if (template.fave) {
       Fave.register(self);
     }
-    if (self.albums[0].$t.fave) {
-      Fave.register(self.albums[0], true);
+    if (self.album.$t.fave) {
+      Fave.register(self.album, true);
     }
   }
   if (template.votes && self.entry_votes) {
@@ -115,12 +115,12 @@ var Song = function (self, parent_event) {
         template.rating.rating_set(self.rating);
       }
     }
-    if (self.albums[0].$t.rating) {
-      if (self.albums[0].rating_user) {
-        self.albums[0].$t.rating.classList.add("rating_user");
-      } else if (!self.albums[0].$t.rating.classList.contains("rating_user")) {
-        self.albums[0].$t.rating.classList.remove("rating_user");
-        self.albums[0].$t.rating.rating_set(self.albums[0].rating);
+    if (self.album.$t.rating) {
+      if (self.album.rating_user) {
+        self.album.$t.rating.classList.add("rating_user");
+      } else if (!self.album.$t.rating.classList.contains("rating_user")) {
+        self.album.$t.rating.classList.remove("rating_user");
+        self.album.$t.rating.rating_set(self.album.rating);
       }
     }
 

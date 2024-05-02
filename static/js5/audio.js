@@ -236,10 +236,10 @@ var RWAudioConstructor = function () {
 
     var msUpdateMetadata = function () {
       var song = now_playing.songs[0];
-      var art_exists = song.albums[0].art ? true : false;
+      var art_exists = song.album.art ? true : false;
       var art_url =
         "https://rainwave.cc" +
-        (now_playing.songs[0].albums[0].art || "static/images4/noart_1.jpg");
+        (now_playing.songs[0].album.art || "static/images4/noart_1.jpg");
       var artwork = [
         {
           src: art_url + (art_exists ? "_120.jpg" : ""),
@@ -266,7 +266,7 @@ var RWAudioConstructor = function () {
       navigator.mediaSession.metadata = new MediaMetadata({
         title: song.title,
         artist: artists.join(", "),
-        album: song.albums[0].name,
+        album: song.album.name,
         artwork: artwork,
       });
     };

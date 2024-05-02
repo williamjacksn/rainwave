@@ -2,7 +2,7 @@ import math
 
 from api import fieldtypes
 from api.urls import handle_api_html_url, handle_api_url
-from api.web import APIHandler, PrettyPrintAPIMixin
+from api.web import APIHandler, PrettyPrintAPIHandler
 from libs import cache, db
 from rainwave import playlist
 from rainwave import user as UserLib
@@ -133,7 +133,7 @@ class CurrentListenersRequest(APIHandler):
 
 
 @handle_api_html_url("current_listeners")
-class CurrentListenersHTML(PrettyPrintAPIMixin, CurrentListenersRequest):
+class CurrentListenersHTML(PrettyPrintAPIHandler, CurrentListenersRequest):
     pass
 
 
